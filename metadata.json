@@ -1,0 +1,5 @@
+{
+  "name": "BNI 紅綠燈計算機",
+  "description": "BNI 會員個人紅綠燈評分計算工具，根據培訓、出席、一對一、引薦及來賓等指標計算燈號。",
+  "requestFramePermissions": []
+}
