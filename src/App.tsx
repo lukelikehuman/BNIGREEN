@@ -77,6 +77,16 @@ export default function App() {
 
     const total = trainingScore + attendanceScore + otoScore + referralScore + visitorScore + amountScore;
 
+    // Calculate Gaps to Green (Target values for each metric)
+    const gaps = {
+      training: Math.max(0, 6 - trainingPoints),
+      attendance: effectiveAbsences,
+      oto: Math.max(0, Math.ceil(2 * currentWeeks - totalOneToOnes)),
+      referral: Math.max(0, Math.ceil(1.5 * currentWeeks - totalReferrals)),
+      visitor: Math.max(0, Math.ceil(0.5 * currentWeeks - totalVisitors)),
+      amount: Math.max(0, 200 - referralAmount)
+    };
+
     let light: LightColor = 'black';
     if (total >= 70) light = 'green';
     else if (total >= 50) light = 'yellow';
@@ -91,6 +101,7 @@ export default function App() {
       amount: amountScore,
       total,
       light,
+      gaps,
       effectiveAbsences,
       averages: {
         oto: otoAvg.toFixed(2),
@@ -349,6 +360,58 @@ export default function App() {
                   </div>
                   <span className="text-sm font-mono text-zinc-400">25 分以下</span>
                 </div>
+              </div>
+            </div>
+
+            {/* Gap to Green Section */}
+            <div className="bg-white rounded-3xl p-6 border border-zinc-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-4">
+                <TrendingUp className="w-4 h-4 text-emerald-500" />
+                <h4 className="text-sm font-bold uppercase tracking-wider text-zinc-500">距離綠燈目標還差多少？</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-zinc-500">培訓積分 (CEU)</span>
+                  <span className={`font-mono font-bold ${scores.gaps.training > 0 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                    {scores.gaps.training > 0 ? `再加 ${scores.gaps.training} 單位` : '已達標'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-zinc-500">出席 (缺席/遲到)</span>
+                  <span className={`font-mono font-bold ${scores.gaps.attendance > 0 ? 'text-rose-500' : 'text-emerald-500'}`}>
+                    {scores.gaps.attendance > 0 ? `需減少 ${scores.gaps.attendance} 次缺席` : '已達標'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-zinc-500">一對一會面</span>
+                  <span className={`font-mono font-bold ${scores.gaps.oto > 0 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                    {scores.gaps.oto > 0 ? `再加 ${scores.gaps.oto} 次` : '已達標'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-zinc-500">提供引薦</span>
+                  <span className={`font-mono font-bold ${scores.gaps.referral > 0 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                    {scores.gaps.referral > 0 ? `再加 ${scores.gaps.referral} 筆` : '已達標'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-zinc-500">來賓</span>
+                  <span className={`font-mono font-bold ${scores.gaps.visitor > 0 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                    {scores.gaps.visitor > 0 ? `再加 ${scores.gaps.visitor} 位` : '已達標'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-zinc-500">交易價值 (TYFCB)</span>
+                  <span className={`font-mono font-bold ${scores.gaps.amount > 0 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                    {scores.gaps.amount > 0 ? `再加 ${scores.gaps.amount} 萬` : '已達標'}
+                  </span>
+                </div>
+              </div>
+              <div className="mt-6 p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                <p className="text-[11px] text-emerald-700 leading-relaxed">
+                  💡 <strong>提示：</strong> 以上數值是為了讓該單項指標達到「綠燈評分」所需的總量。
+                  達成這些目標能顯著提升您的總積分，幫助您邁向分會綠燈會員！
+                </p>
               </div>
             </div>
           </div>

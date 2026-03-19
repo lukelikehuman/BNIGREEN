@@ -1,20 +1,42 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# BNI PALMS 紅綠燈計算機
 
-# Run and deploy your AI Studio app
+這是一個專為 BNI 會員設計的個人紅綠燈評分計算工具。您可以根據 PALMS 報表中的數據，快速計算出目前的燈號狀態與積分明細。
 
-This contains everything you need to run your app locally.
+## 功能特點
 
-View your app in AI Studio: https://ai.studio/apps/9e436f2d-33e5-417d-8682-e8d034e58cfe
+- **動態週數計算**：支援不同統計週數（如 24 週、20 週等）的平均值換算。
+- **自動折算遲到**：內建「3 次遲到 = 1 次缺席」的折算邏輯。
+- **對標 PALMS 報表**：輸入數據與報表欄位完全對齊（CEU、一對一、引薦、來賓、TYFCB）。
+- **即時反饋**：輸入數據後立即顯示總分、燈號顏色及提升建議。
+- **響應式設計**：支援手機與平板瀏覽。
 
-## Run Locally
+## 如何使用
 
-**Prerequisites:**  Node.js
+1. 輸入您的 PALMS 報表統計週數。
+2. 填入各項指標的總計數值。
+3. 右側將自動顯示您的總積分與對應燈號。
 
+## 技術棧
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- React 19
+- Vite
+- Tailwind CSS 4
+- Lucide React (圖標)
+- Framer Motion (動畫)
+
+## 佈署說明
+
+本專案已優化，支援一鍵佈署至 **Vercel** 或 **GitHub Pages**。
+
+### 本地開發
+
+```bash
+npm install
+npm run dev
+```
+
+### 建立生產版本
+
+```bash
+npm run build
+```
